@@ -1,0 +1,49 @@
+<div style="text-align:center; margin-top: 40px;">
+  <div class="header">
+  <button (click)="loadProducts()" class="buttonclass">Load Products</button>
+  <div style="margin-top: 20px;" class="form-row">
+    <h3>Add new Product</h3>
+    <input type="text" [(ngModel)]="newProductname" placeholder="Product Name"/>
+    <input type="number" [(ngModel)]="newProductprice" placeholder="Product Price"/>
+    <button (click)="addProduct()">Add Product</button>
+  </div>
+  </div>
+
+  <nile-table-body *ngIf="products.length > 0" style="margin-top: 20px;">
+    <nile-table-row>
+      <nile-table-header-item>Product Name</nile-table-header-item>
+      <nile-table-header-item>Price (₹)</nile-table-header-item>
+      <nile-table-header-item style="text-align: right;">Actions</nile-table-header-item>
+    </nile-table-row>
+
+    <nile-table-row *ngFor="let product of products">
+      <nile-table-cell-item>{{ product.product_name }}</nile-table-cell-item>
+      <nile-table-cell-item>{{ product.price }}</nile-table-cell-item>
+      <nile-table-cell-item style="text-align: right;">
+        <button (click)="onEditProduct(product)">Edit</button>
+        <button (click)="onDeleteProduct(product)"style="margin-left: 8px;">Delete</button>
+      </nile-table-cell-item>
+    </nile-table-row>
+  </nile-table-body>
+
+  <!-- Edit Modal -->
+  <!-- Center Modal -->
+<div *ngIf="editingProduct" class="modal-overlay">
+  <div class="modal-content">
+    <h3>Edit Product</h3>
+    <label>
+      Name:
+      <input type="text" [(ngModel)]="editProductname" />
+    </label>
+    <br /><br />
+    <label>
+      Price:
+      <input type="number" [(ngModel)]="editProductprice" />
+    </label>
+    <br /><br />
+    <button (click)="saveProduct()" [disabled]="isSaving">Save</button>
+    <button (click)="cancelEdit()" style="margin-left: 8px;">Cancel</button>
+  </div>
+</div>
+
+</div>
